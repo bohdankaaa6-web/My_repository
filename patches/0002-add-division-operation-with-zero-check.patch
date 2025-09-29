@@ -1,0 +1,81 @@
+From ae545b63513b208bc6e80842c59f8d136cb72060 Mon Sep 17 00:00:00 2001
+From: Bohdana <bohdankaaa6@gmail.com>
+Date: Mon, 29 Sep 2025 22:42:23 +0300
+Subject: [PATCH 2/2] add division operation with zero-check
+
+---
+ calculator.cpp | 21 +++++++++++++++++++--
+ calculator.h   | 11 ++++++-----
+ 2 files changed, 25 insertions(+), 7 deletions(-)
+
+diff --git a/calculator.cpp b/calculator.cpp
+index 2aabe06..cdcdebb 100644
+--- a/calculator.cpp
++++ b/calculator.cpp
+@@ -2,16 +2,33 @@
+ 
+ int Calculator::Add (int a, int b)
+ {
+-	return a + b + 0.5;
++	return a + b;
+ 
+ }
+ 
+ int Calculator::Sub (int a, int b)
+ {
+-	return Add (a, -b);
++	return a - b;
++}
++
++int Calculator::Add (double a, double b)
++{
++	return a + b + 0.5;
++}
++
++int Calculator::Sub (double a, double b)
++{
++	return Add(a, -b);
+ }
+ 
+ int Calculator::Mul (double a, double b)
+ {
+     return a * b;
++
++int Calculator::Div (double a, double b)
++{
++	if (b == 0) {
++		throw std::invalid_argument("Division by zero");
++	}
++	return a / b;
+ }
+diff --git a/calculator.h b/calculator.h
+index f59f8da..99c7507 100644
+--- a/calculator.h
++++ b/calculator.h
+@@ -1,17 +1,18 @@
+ #ifndef CALCULATOR_H
+ #define CALCULATOR_H
+ 
++#include <stdexcept>
+ class Calculator
+ {
+-    public:
+-        int Add (int, int);
++	public:
++        	int Add (int, int);
++        	int Sub (int, int);
+ 
+-        int Sub (int, int);
+ 	public:
+ 		int Add (double, double);
+ 		int Sub (double, double);
+-
+-        int Mul (double, double);
++		int Mul (double, double);
++		int Div (double, double);//new method
+ };
+ 
+ #endif//CALCULATOR_H
+-- 
+2.34.1
+
